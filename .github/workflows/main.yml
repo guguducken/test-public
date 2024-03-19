@@ -7,4 +7,4 @@ on:
 jobs:
   matrixone-ci:
     name: Matrixone CI
-    uses: gugus-test/test/.github/workflows/workflows@main
+    uses: gugus-test/test/.github/workflows/main.yml@main
