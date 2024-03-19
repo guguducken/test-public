@@ -1,0 +1,10 @@
+# Define workflow name.
+name: Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  matrixone-ci:
+    name: Matrixone CI
+    uses: gugus-test/test/workflows/workflows@main
