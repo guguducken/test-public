@@ -1,0 +1,115 @@
+partition_rules:
+    - name: main
+      conditions:
+        - base=main
+    - name: 1.1-dev
+      conditions:
+        - base=1.1-dev
+
+queue_rules:
+  - name: main
+    merge_conditions: []
+    checks_timeout: 4h
+  - name: release-1.1
+    merge_conditions: []
+    checks_timeout: 4h
+
+pull_request_rules:
+  - name: Automatic queue on approval for main
+    conditions:
+      - "#changes-requested-reviews-by<=0"
+      - label!=do-not-merge/wip
+      - base=main
+      - queue-partition-name=main
+    actions:
+      queue:
+        name: main
+        merge_method: squash
+        commit_message_template: |
+          {{ title }} (#{{ number }})
+
+          {{ body | get_section("## What this PR does / why we need it:") }}
+
+          Approved by: @{{ approved_reviews_by | join(', @') }}
+
+  - name: Automatic queue on approval for release-1.1
+    conditions:
+      - "#changes-requested-reviews-by<=0"
+      - label!=do-not-merge/wip
+      - base=1.1-dev
+      - queue-partition-name=1.1-dev
+      - approved-reviews-by=sukki37
+    actions:
+      queue:
+        name: release-1.1
+        merge_method: squash
+        commit_message_template: |
+          {{ title }} (#{{ number }})
+
+          {{ body | get_section("## What this PR does / why we need it:") }}
+
+          Approved by: @{{ approved_reviews_by | join(', @') }}
+
+  - name: Auto Request Reviewer
+    conditions:
+      - base!=main
+    actions:
+      request_reviews:
+        users:
+          - sukki37
+
+  - name: Auto update branch
+    conditions:
+      - created-at>=00:10 ago
+    actions:
+      update: 
+
+  - name: label for Bug
+    conditions: 
+      - body~=(?im)- \[x\] BUG
+    actions:
+      label:
+        add:
+          - kind/bug
+  - name: label for Feature
+    conditions: 
+      - body~=(?im)- \[x\] Feature
+    actions:
+      label:
+        add:
+          - kind/feature
+  - name: label for Improvement
+    conditions: 
+      - body~=(?im)- \[x\] Improvement
+    actions:
+      label:
+        add:
+          - kind/enhancement
+  - name: label for Documentation
+    conditions: 
+      - body~=(?im)- \[x\] Documentation
+    actions:
+      label:
+        add:
+          - kind/documentation
+  - name: label for Test and CI
+    conditions: 
+      - body~=(?im)- \[x\] Test and CI
+    actions:
+      label:
+        add:
+          - kind/test-ci
+  - name: label for Code Refactoring
+    conditions: 
+      - body~=(?im)- \[x\] Code Refactoring
+    actions:
+      label:
+        add:
+          - kind/refactor
+  - name: label for API-change
+    conditions: 
+      - body~=(?im)- \[x\] API-change
+    actions:
+      label:
+        add:
+          - kind/api-change
