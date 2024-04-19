@@ -55,6 +55,24 @@ pull_request_rules:
           {{ body | get_section("## What this PR does / why we need it:") }}
 
           Approved by: @{{ approved_reviews_by | join(', @') }}
+  - name: Automatic queue on approval for 1.0
+    conditions:
+      - "#changes-requested-reviews-by<=0"
+      - label!=do-not-merge/wip
+      - base=1.0-dev
+      - queue-partition-name=1.0-dev
+    actions:
+      queue:
+        name: main
+        merge_method: squash
+        commit_message_template: |
+          {{ title }} (#{{ number }})
+
+          {{ body | get_section("## What this PR does / why we need it:") }}
+
+          Approved by: @{{ approved_reviews_by | join(', @') }}
+
+
 
   - name: Auto Request Reviewer
     conditions:
