@@ -6,5 +6,8 @@ on:
 
 jobs:
   matrixone-ci:
-    name: Matrixone CI
-    uses: gugus-test/test/.github/workflows/main.yml@main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Hostname
+        run: |
+          hostname;
