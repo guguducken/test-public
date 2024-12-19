@@ -12,3 +12,4 @@ jobs:
         run: |
           sudo hostnamectl hostname matrixone-upgrade-runner;
           hostname;
+          echo ${{ runner.name }}
