@@ -6,10 +6,11 @@ on:
 
 jobs:
   matrixone-ci:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Print Hostname
         run: |
+          ldd --version
           sudo hostnamectl hostname matrixone-upgrade-runner;
           hostname;
           echo ${{ runner.name }}
