@@ -10,4 +10,4 @@ jobs:
     steps:
       - name: Print Hostname
         run: |
-          strings /lib/aarch64-linux-gnu/libc.so.6 | grep GLIBC_
+          strings /lib/x86_64-linux-gnu/libc.so.6 | grep GLIBC_
