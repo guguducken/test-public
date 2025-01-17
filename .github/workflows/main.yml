@@ -17,6 +17,6 @@ jobs:
     
       - uses: beyondstorage/setup-hdfs@master
         with:
-          hdfs-version: '3.3.1'
+          hdfs-version: '3.4.1'
     
       - run: curl ${{ env.HDFS_NAMENODE_ADDR }}
