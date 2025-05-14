@@ -21,5 +21,7 @@ jobs:
       - name: Setup Env
         uses: matrixorigin/CI/actions/setup-env@modify-setup-go
         with: 
-          go-version: ""
           go-version-file: ${{ github.workspace }}/go.mod
+      - name: Test
+        run: | 
+          make clean && make;
