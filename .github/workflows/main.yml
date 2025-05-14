@@ -16,8 +16,8 @@ jobs:
           cmake --version;
       - uses: actions/checkout@v4
         with:
-          repository: matrixorigin/matrixone
-          ref: main
+          repository: guguducken/matrixone
+          ref: upgrade-go-version
       - name: Setup Env
         uses: matrixorigin/CI/actions/setup-env@modify-setup-go
         with: 
