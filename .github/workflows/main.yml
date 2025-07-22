@@ -9,19 +9,16 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - run: |
-          cmake --version;
-      - name: Get CMake
-        uses: symbitic/install-cmake@master
-      - run: |
-          cmake --version;
-      - uses: actions/checkout@v4
+          cd $GITHUB_WORKSPACE;
+          echo "aaaaa" > a.txt;
+          echo "bbbbb" > b.txt;
+      - name: Upload Compressed Files
+        uses: actions/upload-artifact@v4
+        continue-on-error: true
         with:
-          repository: guguducken/matrixone
-          ref: upgrade-go-version
-      - name: Setup Env
-        uses: matrixorigin/CI/actions/setup-env@modify-setup-go
-        with: 
-          go-version-file: ${{ github.workspace }}/go.mod
-      - name: Test
-        run: | 
-          make clean && make;
+          name: coverage-files
+          path: |
+            ${{ github.workspace }}/a.txt
+            ${{ github.workspace }}/b.txt
+            ${{ github.workspace }}/c.txt
+          retention-days: 7
